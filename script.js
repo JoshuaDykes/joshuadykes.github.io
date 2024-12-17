@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             // Send email using EmailJS
-            emailjs.send('service_bivqx6w', 'template_default', templateParams)
+            emailjs.send('service_bivqx6w', 'template_a0p1w46', templateParams)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
                     alert('Message sent successfully! I will get back to you soon.');
