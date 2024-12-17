@@ -52,39 +52,39 @@ document.addEventListener('DOMContentLoaded', function() {
     revealOnScroll(); // Initial check
   
     // Contact form submission
-    const contactForm = document.querySelector('#contact-form');
+    const contactForm = document.getElementById('contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const formData = {
-                to_name: "Joshua Dykes",
-                from_name: this.querySelector('input[name="from_name"]').value,
-                from_email: this.querySelector('input[name="from_email"]').value,
-                message: this.querySelector('textarea[name="message"]').value,
-                reply_to: this.querySelector('input[name="from_email"]').value
-            };
 
             // Show loading state
-            const submitBtn = this.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
+            const submitBtn = contactForm.querySelector('.submit-btn');
+            const originalBtnText = submitBtn.textContent;
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
 
-            try {
-                console.log('Sending email with data:', formData);
-                const result = await emailjs.send('service_ubqhift', 'template_a0p1w46', formData);
-                console.log('SUCCESS!', result.status, result.text);
-                alert('Message sent successfully!');
-                contactForm.reset();
-            } catch (error) {
-                console.error('FAILED...', error);
-                alert('Failed to send message. Please try again.');
-            } finally {
-                // Reset button state
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
+            // Prepare template parameters
+            const templateParams = {
+                from_name: document.getElementById('from_name').value,
+                from_email: document.getElementById('from_email').value,
+                message: document.getElementById('message').value
+            };
+
+            // Send email using EmailJS
+            emailjs.send('service_bivqx6w', 'template_default', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    alert('Message sent successfully!');
+                    contactForm.reset();
+                })
+                .catch(function(error) {
+                    console.log('FAILED...', error);
+                    alert('Failed to send message. Please try again.');
+                })
+                .finally(function() {
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.disabled = false;
+                });
         });
     }
   
