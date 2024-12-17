@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             // Send email using EmailJS
-            emailjs.send('service_bivqx6w', 'contact_form', templateParams)
+            emailjs.send('service_bivqx6w', 'template_default', templateParams)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
                     alert('Message sent successfully! I will get back to you soon.');
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .catch(function(error) {
                     console.error('FAILED...', error);
-                    alert('Failed to send message. Please try again or contact me directly through social media.');
+                    alert('Failed to send message. Please try again or contact me directly through social media.\nError: ' + error.text);
                 })
                 .finally(function() {
                     submitBtn.textContent = originalBtnText;
