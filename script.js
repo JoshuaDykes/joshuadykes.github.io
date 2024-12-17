@@ -65,21 +65,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Prepare template parameters
             const templateParams = {
+                to_name: 'Joshua Dykes',
                 from_name: document.getElementById('from_name').value,
                 from_email: document.getElementById('from_email').value,
-                message: document.getElementById('message').value
+                message: document.getElementById('message').value,
+                reply_to: document.getElementById('from_email').value
             };
 
             // Send email using EmailJS
-            emailjs.send('service_bivqx6w', 'template_default', templateParams)
+            emailjs.send('service_bivqx6w', 'contact_form', templateParams)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
-                    alert('Message sent successfully!');
+                    alert('Message sent successfully! I will get back to you soon.');
                     contactForm.reset();
                 })
                 .catch(function(error) {
-                    console.log('FAILED...', error);
-                    alert('Failed to send message. Please try again.');
+                    console.error('FAILED...', error);
+                    alert('Failed to send message. Please try again or contact me directly through social media.');
                 })
                 .finally(function() {
                     submitBtn.textContent = originalBtnText;
