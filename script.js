@@ -52,24 +52,36 @@ document.addEventListener('DOMContentLoaded', function() {
     revealOnScroll(); // Initial check
   
     // Contact form submission
-    const contactForm = document.querySelector('#contact form');
+    const contactForm = document.querySelector('#contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             const formData = {
-                from_name: this.querySelector('input[name="name"]').value,
-                from_email: this.querySelector('input[name="email"]').value,
+                name: this.querySelector('input[name="name"]').value,
+                email: this.querySelector('input[name="email"]').value,
                 message: this.querySelector('textarea[name="message"]').value
             };
 
-            emailjs.send('default_service', 'template_a0p1w46', formData)
+            // Show loading state
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
+            emailjs.send('service_ubqhift', 'template_a0p1w46', formData)
                 .then(function() {
                     alert('Message sent successfully!');
                     contactForm.reset();
+                    // Reset button state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
                 }, function(error) {
                     console.error('Failed to send message:', error);
                     alert('Failed to send message. Please try again.');
+                    // Reset button state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
                 });
         });
     }
