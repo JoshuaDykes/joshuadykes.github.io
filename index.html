@@ -180,7 +180,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
         (function() {
-            emailjs.init("o_TKkpqeqyggSvqYZ");
+            emailjs.init({
+                publicKey: "o_TKkpqeqyggSvqYZ",
+                blockHeadless: false,
+                limitRate: true
+            });
         })();
     </script>
     <script src="script.js"></script>

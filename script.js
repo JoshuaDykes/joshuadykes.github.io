@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Contact form submission
     const contactForm = document.querySelector('#contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const formData = {
@@ -71,23 +71,20 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
 
-            console.log('Sending email with data:', formData);
-
-            emailjs.send('service_ubqhift', 'template_a0p1w46', formData)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    alert('Message sent successfully!');
-                    contactForm.reset();
-                    // Reset button state
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }, function(error) {
-                    console.error('FAILED...', error);
-                    alert('Failed to send message. Please try again.');
-                    // Reset button state
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                });
+            try {
+                console.log('Sending email with data:', formData);
+                const result = await emailjs.send('service_ubqhift', 'template_a0p1w46', formData);
+                console.log('SUCCESS!', result.status, result.text);
+                alert('Message sent successfully!');
+                contactForm.reset();
+            } catch (error) {
+                console.error('FAILED...', error);
+                alert('Failed to send message. Please try again.');
+            } finally {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
         });
     }
   
