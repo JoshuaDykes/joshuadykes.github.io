@@ -59,10 +59,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const formData = {
                 to_name: "Joshua Dykes",
-                from_name: this.querySelector('input[name="name"]').value,
-                from_email: this.querySelector('input[name="email"]').value,
+                from_name: this.querySelector('input[name="from_name"]').value,
+                from_email: this.querySelector('input[name="from_email"]').value,
                 message: this.querySelector('textarea[name="message"]').value,
-                reply_to: this.querySelector('input[name="email"]').value
+                reply_to: this.querySelector('input[name="from_email"]').value
             };
 
             // Show loading state
@@ -70,6 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const originalText = submitBtn.textContent;
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
+
+            console.log('Sending email with data:', formData);
 
             emailjs.send('service_ubqhift', 'template_a0p1w46', formData)
                 .then(function(response) {
