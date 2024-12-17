@@ -58,9 +58,11 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             const formData = {
-                name: this.querySelector('input[name="name"]').value,
-                email: this.querySelector('input[name="email"]').value,
-                message: this.querySelector('textarea[name="message"]').value
+                to_name: "Joshua Dykes",
+                from_name: this.querySelector('input[name="name"]').value,
+                from_email: this.querySelector('input[name="email"]').value,
+                message: this.querySelector('textarea[name="message"]').value,
+                reply_to: this.querySelector('input[name="email"]').value
             };
 
             // Show loading state
@@ -70,14 +72,15 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.disabled = true;
 
             emailjs.send('service_ubqhift', 'template_a0p1w46', formData)
-                .then(function() {
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
                     alert('Message sent successfully!');
                     contactForm.reset();
                     // Reset button state
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
                 }, function(error) {
-                    console.error('Failed to send message:', error);
+                    console.error('FAILED...', error);
                     alert('Failed to send message. Please try again.');
                     // Reset button state
                     submitBtn.textContent = originalText;
